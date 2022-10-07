@@ -1,5 +1,4 @@
 public class account {
-
     /*
         ID: The identification number for the account
         income: The balance for the account
@@ -33,7 +32,7 @@ public class account {
 
     /*
         getInfo:
-        Gets account information in an easy to read string format
+        Gets account information in an easy-to-read string format
      */
     public void getInfo(){
         System.out.println(
@@ -66,6 +65,33 @@ public class account {
         return maxBracket;
     }
 
+    /*
+        taxCalculator:
+        Using information that is put into the account
+        this function calculates:
+            total federal income tax
+            child tax credit
+            total tax owed
+            income after taxes
+     */
+    public String taxCalculator() {
+        double incomeTax = 0;
+        double childBenefits = children*2000;
+        double tempIncome = income;
 
-
+        for (int x = maxBracket()-1; x > 1; x--) {
+                incomeTax += (tempIncome-maxRates[x-1])*taxPercents[x];
+                tempIncome -= (tempIncome-maxRates[x-1]);
+            }
+        incomeTax += tempIncome*taxPercents[0];
+        incomeTax -= childBenefits;
+        return (
+                        "\n===============\n"+
+                        "Total Federal Income Tax: $"+incomeTax+"\n"+
+                        "Child Tax Credit: $"+(incomeTax+childBenefits)+"\n"+
+                        "Total Owed: $"+incomeTax+"\n"+
+                        "Paycheck After Federal Tax: $"+(income-incomeTax)+
+                        "\n===============\n"
+                );
+    }
 }
