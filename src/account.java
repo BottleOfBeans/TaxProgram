@@ -12,7 +12,7 @@ public class account {
 
     public double[] taxPercents = {0.1,0.12,0.22,0.24,0.32,0.35,0.37};
     public double[] maxRates = {10275,41775,89075,170050,215950,539900,539901};
-
+    public double[] marriedMaxRates ={20550,83550,178150,340100,431900,647850,647850};
     /*
         Constructors:
         Take in the account ID and balance, and put store them
@@ -78,6 +78,10 @@ public class account {
         double incomeTax = 0;
         double childBenefits = children*2000;
         double tempIncome = income;
+
+        if(isMarried){
+            maxRates = marriedMaxRates;
+        }
 
         for (int x = maxBracket()-1; x > 1; x--) {
                 incomeTax += (tempIncome-maxRates[x-1])*taxPercents[x];
