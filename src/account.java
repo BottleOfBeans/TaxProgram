@@ -11,11 +11,12 @@ public class account {
     public int children;
     public double deductions;
 
+    public double StandardDeductions = 12950;
     public double[] taxPercents = {0.1,0.12,0.22,0.24,0.32,0.35,0.37};
     public double[] maxRates = {10275,41775,89075,170050,215950,539900,99999999};
     public double[] minRates = {0,10275,41775,89075,170050,215950,539901};
-    public double[] marriedMaxRates ={20550,83550,178150,340100,431900,647850,647850};
-    public double[] marriedMinRates ={0,20551,83551,178151,340101,431901,647850};
+    public double[] marriedMaxRates ={20551,83551,178151,340101,431901,647850,999999999};
+    public double[] marriedMinRates ={0,20551,83551,178151,340101,431901,647851};
     /*
         Constructors:
         Take in the account ID and balance, and put store them
@@ -77,13 +78,20 @@ public class account {
     public String taxCalculator() {
         double incomeTax = 0;
         double childBenefits = children*2000;
-        double tempIncome = income-deductions;
+        double tempIncome = income;
 
         if(isMarried){
             maxRates = marriedMaxRates;
             minRates = marriedMinRates;
+            StandardDeductions = 25900;
         }
-        System.out.println("Max Percent: " + taxPercents[maxBracket()]);
+
+        if(deductions < StandardDeductions){
+            deductions = StandardDeductions;
+        }
+        tempIncome -= deductions;
+
+        System.out.println("Max Percent: " + taxPercents[maxBracket()] + "      Deductions: " + deductions);
 
         for(int x = maxBracket(); x>=0; x--){
             /*/
